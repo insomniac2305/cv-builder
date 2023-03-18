@@ -1,6 +1,7 @@
 import { Component } from "react";
 import General from "./General";
 import "../styles/App.css";
+import Education from "./Education";
 
 class App extends Component {
   render() {
@@ -8,6 +9,7 @@ class App extends Component {
       <div className="App">
         <header><h1>CV Builder</h1></header>
         <General />
+        <Education />
       </div>
     );
   }
