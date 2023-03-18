@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 
-class Education extends Component {
+class Work extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       stages: [],
-      institution: "",
-      degree: "",
-      dateFinished: "",
+      company: "",
+      position: "",
+      description: "",
+      startDate: "",
+      endDate: "",
       showForm: false,
       editStage: null,
     };
@@ -29,28 +31,29 @@ class Education extends Component {
   addStage(e) {
     e.preventDefault();
 
-    const { stages, institution, degree, dateFinished, editStage } = this.state;
+    const { stages, company, position, description, startDate, endDate, editStage } = this.state;
     const newStages = [...stages];
+    const changeStage = {
+      company,
+      position,
+      description,
+      startDate,
+      endDate,
+    };
 
     if (editStage) {
-      newStages[editStage] = {
-        institution,
-        degree,
-        dateFinished,
-      };
+      newStages[editStage] = changeStage;
     } else {
-      newStages.push({
-        institution,
-        degree,
-        dateFinished,
-      });
+      newStages.push(changeStage);
     }
 
     this.setState({
       stages: newStages,
-      institution: "",
-      degree: "",
-      dateFinished: "",
+      company: "",
+      position: "",
+      description: "",
+      startDate: "",
+      endDate: "",
       showForm: false,
       editStage: null,
     });
@@ -60,9 +63,11 @@ class Education extends Component {
     const stageId = e.target.dataset.key;
     const stage = this.state.stages[stageId];
     this.setState({
-      institution: stage.institution,
-      degree: stage.degree,
-      dateFinished: stage.dateFinished,
+      company: stage.company,
+      position: stage.position,
+      description: stage.description,
+      startDate: stage.startDate,
+      endDate: stage.endDate,
       showForm: true,
       editStage: stageId,
     });
@@ -84,7 +89,7 @@ class Education extends Component {
   }
 
   render() {
-    const { stages, institution, degree, dateFinished, showForm } = this.state;
+    const { stages, company, position, description, startDate, endDate, showForm } = this.state;
     const stageList = stages.map((stage, index) => (
       <div key={index} className="stage">
         <button className="Edit" onClick={this.editStage} data-key={index}>
@@ -93,35 +98,37 @@ class Education extends Component {
         <button className="Delete" onClick={this.deleteStage} data-key={index}>
           Delete
         </button>
-        <div className="label">Institution</div>
-        <div className="institution">{stage.institution || "-"}</div>
-        <div className="label">Degree</div>
-        <div className="degree">{stage.degree || "-"}</div>
-        <div className="label">Date finished</div>
-        <div className="date-finished">
-          {stage.dateFinished === "" ? "-" : new Date(stage.dateFinished).toLocaleDateString()}
+        <div className="label">Company</div>
+        <div className="company">{stage.company || "-"}</div>
+        <div className="label">Position</div>
+        <div className="position">{stage.position || "-"}</div>
+        <div className="label">Description</div>
+        <div className="description">{stage.description || "-"}</div>
+        <div className="label">From</div>
+        <div className="start-date">
+          {stage.startDate === "" ? "-" : new Date(stage.startDate).toLocaleDateString()}
         </div>
+        <div className="label">Until</div>
+        <div className="end-date">{stage.endDate === "" ? "-" : new Date(stage.endDate).toLocaleDateString()}</div>
       </div>
     ));
 
     return (
-      <div className="education">
-        <h2>Education</h2>
+      <div className="work">
+        <h2>Work experience</h2>
         {stageList}
         {showForm && (
           <form onSubmit={this.addStage}>
-            <label htmlFor="institution">Institution</label>
-            <input type="text" name="institution" id="institution" value={institution} onChange={this.handleChange} />
-            <label htmlFor="degree">Degree</label>
-            <input type="text" name="degree" id="degree" value={degree} onChange={this.handleChange} />
-            <label htmlFor="dateFinished">Date finished</label>
-            <input
-              type="date"
-              name="dateFinished"
-              id="dateFinished"
-              value={dateFinished}
-              onChange={this.handleChange}
-            />
+            <label htmlFor="company">Company</label>
+            <input type="text" name="company" id="company" value={company} onChange={this.handleChange} />
+            <label htmlFor="position">Position</label>
+            <input type="text" name="position" id="position" value={position} onChange={this.handleChange} />
+            <label htmlFor="description">Description</label>
+            <textarea name="description" id="description" value={description} onChange={this.handleChange} />
+            <label htmlFor="startDate">From</label>
+            <input type="date" name="startDate" id="startDate" value={startDate} onChange={this.handleChange} />
+            <label htmlFor="endDate">Until</label>
+            <input type="date" name="endDate" id="endDate" value={endDate} onChange={this.handleChange} />
             <button type="submit">Save</button>
           </form>
         )}
@@ -133,4 +140,4 @@ class Education extends Component {
   }
 }
 
-export default Education;
+export default Work;
