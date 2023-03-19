@@ -23,9 +23,20 @@ class Work extends Component {
   }
 
   toggleForm() {
-    this.setState((state) => ({
-      showForm: !state.showForm,
-    }));
+    const newState = {
+      showForm: !this.state.showForm,
+    };
+
+    if (!newState.showForm) {
+      newState.company = "";
+      newState.position = "";
+      newState.description = "";
+      newState.startDate = "";
+      newState.endDate = "";
+      newState.editStage = null;
+    }
+
+    this.setState(newState);
   }
 
   addStage(e) {
@@ -92,24 +103,36 @@ class Work extends Component {
     const { stages, company, position, description, startDate, endDate, showForm } = this.state;
     const stageList = stages.map((stage, index) => (
       <div key={index} className="stage">
-        <button className="Edit" onClick={this.editStage} data-key={index}>
-          Edit
-        </button>
-        <button className="Delete" onClick={this.deleteStage} data-key={index}>
-          Delete
-        </button>
-        <div className="label">Company</div>
-        <div className="company">{stage.company || "-"}</div>
-        <div className="label">Position</div>
-        <div className="position">{stage.position || "-"}</div>
-        <div className="label">Description</div>
-        <div className="description">{stage.description || "-"}</div>
-        <div className="label">From</div>
-        <div className="start-date">
-          {stage.startDate === "" ? "-" : new Date(stage.startDate).toLocaleDateString()}
+        <div className="actions">
+          <button className="edit" onClick={this.editStage} data-key={index}>
+            Edit
+          </button>
+          <button className="delete" onClick={this.deleteStage} data-key={index}>
+            Delete
+          </button>
         </div>
-        <div className="label">Until</div>
-        <div className="end-date">{stage.endDate === "" ? "-" : new Date(stage.endDate).toLocaleDateString()}</div>
+        <div className="data-row">
+          <div className="label">Company</div>
+          <div className="company">{stage.company || "-"}</div>
+        </div>
+        <div className="data-row">
+          <div className="label">Position</div>
+          <div className="position">{stage.position || "-"}</div>
+        </div>
+        <div className="data-row">
+          <div className="label">Description</div>
+          <div className="description">{stage.description || "-"}</div>
+        </div>
+        <div className="data-row">
+          <div className="label">From</div>
+          <div className="start-date">
+            {stage.startDate === "" ? "-" : new Date(stage.startDate).toLocaleDateString()}
+          </div>
+        </div>
+        <div className="data-row">
+          <div className="label">Until</div>
+          <div className="end-date">{stage.endDate === "" ? "-" : new Date(stage.endDate).toLocaleDateString()}</div>
+        </div>
       </div>
     ));
 
@@ -119,20 +142,30 @@ class Work extends Component {
         {stageList}
         {showForm && (
           <form onSubmit={this.addStage}>
-            <label htmlFor="company">Company</label>
-            <input type="text" name="company" id="company" value={company} onChange={this.handleChange} />
-            <label htmlFor="position">Position</label>
-            <input type="text" name="position" id="position" value={position} onChange={this.handleChange} />
-            <label htmlFor="description">Description</label>
-            <textarea name="description" id="description" value={description} onChange={this.handleChange} />
-            <label htmlFor="startDate">From</label>
-            <input type="date" name="startDate" id="startDate" value={startDate} onChange={this.handleChange} />
-            <label htmlFor="endDate">Until</label>
-            <input type="date" name="endDate" id="endDate" value={endDate} onChange={this.handleChange} />
+            <div className="form-row">
+              <label htmlFor="company">Company</label>
+              <input type="text" name="company" id="company" value={company} onChange={this.handleChange} />
+            </div>
+            <div className="form-row">
+              <label htmlFor="position">Position</label>
+              <input type="text" name="position" id="position" value={position} onChange={this.handleChange} />
+            </div>
+            <div className="form-row">
+              <label htmlFor="description">Description</label>
+              <textarea name="description" id="description" value={description} onChange={this.handleChange} />
+            </div>
+            <div className="form-row">
+              <label htmlFor="startDate">From</label>
+              <input type="date" name="startDate" id="startDate" value={startDate} onChange={this.handleChange} />
+            </div>
+            <div className="form-row">
+              <label htmlFor="endDate">Until</label>
+              <input type="date" name="endDate" id="endDate" value={endDate} onChange={this.handleChange} />
+            </div>
             <button type="submit">Save</button>
           </form>
         )}
-        <button className="Add" onClick={this.toggleForm}>
+        <button className={showForm ? "cancel" : "add"} onClick={this.toggleForm}>
           {showForm ? "Cancel" : "Add"}
         </button>
       </div>

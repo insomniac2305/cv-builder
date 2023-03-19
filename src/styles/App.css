@@ -1,0 +1,146 @@
+:root {
+  --bg-color: #f5ecff;
+  --bg-color-shade: #fdfaff;
+  --pri-color: #5d5ae4;
+  --err-color: #ff5d5c;
+  --hl-color: rgba(146, 145, 219, 0.288);
+  --border-radius: 10px;
+  --shadow: 0px 2px 2px 0px hsla(0, 0%, 0%, 0.14), 0px 3px 1px -2px hsla(0, 0%, 0%, 0.12),
+    0px 1px 5px 0px hsla(0, 0%, 0%, 0.2);
+}
+
+html,
+body,
+#root,
+.App {
+  min-height: 100vh;
+  height: auto;
+  box-sizing: border-box;
+}
+
+.App {
+  display: grid;
+  justify-content: center;
+  align-content: start;
+  grid-template-columns: min(700px, 100%);
+  padding: 20px;
+  background-color: var(--bg-color);
+}
+
+.cv {
+  background-color: var(--bg-color-shade);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+header {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.general,
+.education,
+.work {
+  display: grid;
+  position: relative;
+  margin: 10px;
+  gap: 20px;
+  padding: 10px;
+}
+
+form,
+.stage {
+  display: grid;
+  position: relative;
+  gap: 10px;
+  margin: -10px;
+  padding: 10px;
+}
+
+.general,
+.stage {
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s ease;
+}
+
+.general:hover,
+.stage:hover {
+  background-color: var(--hl-color);
+}
+
+.actions {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+.data-row,
+.form-row {
+  display: grid;
+  grid-template-rows: 20px auto;
+}
+
+label,
+.label {
+  font-size: 0.8rem;
+  font-weight: bold;
+  align-self: self-end;
+}
+
+.data {
+  font-size: 1.2rem;
+}
+
+.description {
+  white-space: pre-wrap;
+}
+
+input,
+textarea {
+  font-size: 1.2rem;
+  appearance: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  border: 1px solid #929292;
+  height: 40px;
+  background-color: var(--bg-color-shade);
+}
+
+input:focus,
+textarea:focus {
+  outline: 1px solid var(--pri-color);
+}
+
+textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+button {
+  appearance: none;
+  border: none;
+  outline: none;
+  background-color: var(--pri-color);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  height: 40px;
+  box-shadow: var(--shadow);
+}
+
+button:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+}
+
+button:active {
+  filter: brightness(0.9);
+}
+
+button.delete,
+button.cancel {
+  background-color: var(--err-color);
+}
