@@ -21,9 +21,18 @@ class Education extends Component {
   }
 
   toggleForm() {
-    this.setState((state) => ({
-      showForm: !state.showForm,
-    }));
+    const newState = {
+      showForm: !this.state.showForm,
+    };
+
+    if (!newState.showForm) {
+      newState.institution = "";
+      newState.degree = "";
+      newState.dateFinished = "";
+      newState.editStage = null;
+    }
+
+    this.setState(newState);
   }
 
   addStage(e) {
@@ -35,7 +44,7 @@ class Education extends Component {
       institution,
       degree,
       dateFinished,
-    }
+    };
 
     if (editStage) {
       newStages[editStage] = changeStage;
@@ -84,19 +93,27 @@ class Education extends Component {
     const { stages, institution, degree, dateFinished, showForm } = this.state;
     const stageList = stages.map((stage, index) => (
       <div key={index} className="stage">
-        <button className="Edit" onClick={this.editStage} data-key={index}>
-          Edit
-        </button>
-        <button className="Delete" onClick={this.deleteStage} data-key={index}>
-          Delete
-        </button>
-        <div className="label">Institution</div>
-        <div className="institution">{stage.institution || "-"}</div>
-        <div className="label">Degree</div>
-        <div className="degree">{stage.degree || "-"}</div>
-        <div className="label">Date finished</div>
-        <div className="date-finished">
-          {stage.dateFinished === "" ? "-" : new Date(stage.dateFinished).toLocaleDateString()}
+        <div className="actions">
+          <button className="edit" onClick={this.editStage} data-key={index}>
+            Edit
+          </button>
+          <button className="delete" onClick={this.deleteStage} data-key={index}>
+            Delete
+          </button>
+        </div>
+        <div className="data-row">
+          <div className="label">Institution</div>
+          <div className="institution">{stage.institution || "-"}</div>
+        </div>
+        <div className="data-row">
+          <div className="label">Degree</div>
+          <div className="degree">{stage.degree || "-"}</div>
+        </div>
+        <div className="data-row">
+          <div className="label">Date finished</div>
+          <div className="date-finished">
+            {stage.dateFinished === "" ? "-" : new Date(stage.dateFinished).toLocaleDateString()}
+          </div>
         </div>
       </div>
     ));
@@ -107,22 +124,28 @@ class Education extends Component {
         {stageList}
         {showForm && (
           <form onSubmit={this.addStage}>
-            <label htmlFor="institution">Institution</label>
-            <input type="text" name="institution" id="institution" value={institution} onChange={this.handleChange} />
-            <label htmlFor="degree">Degree</label>
-            <input type="text" name="degree" id="degree" value={degree} onChange={this.handleChange} />
-            <label htmlFor="dateFinished">Date finished</label>
-            <input
-              type="date"
-              name="dateFinished"
-              id="dateFinished"
-              value={dateFinished}
-              onChange={this.handleChange}
-            />
+            <div className="form-row">
+              <label htmlFor="institution">Institution</label>
+              <input type="text" name="institution" id="institution" value={institution} onChange={this.handleChange} />
+            </div>
+            <div className="form-row">
+              <label htmlFor="degree">Degree</label>
+              <input type="text" name="degree" id="degree" value={degree} onChange={this.handleChange} />
+            </div>
+            <div className="form-row">
+              <label htmlFor="dateFinished">Date finished</label>
+              <input
+                type="date"
+                name="dateFinished"
+                id="dateFinished"
+                value={dateFinished}
+                onChange={this.handleChange}
+              />
+            </div>
             <button type="submit">Save</button>
           </form>
         )}
-        <button className="Add" onClick={this.toggleForm}>
+        <button className={showForm ? "cancel" : "add"} onClick={this.toggleForm}>
           {showForm ? "Cancel" : "Add"}
         </button>
       </div>

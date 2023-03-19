@@ -11,9 +11,11 @@ class App extends Component {
         <header>
           <h1>CV Builder</h1>
         </header>
-        <General />
-        <Education />
-        <Work />
+        <div className="cv">
+          <General />
+          <Education />
+          <Work />
+        </div>
       </div>
     );
   }
