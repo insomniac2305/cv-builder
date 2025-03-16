@@ -30,7 +30,7 @@ It was built to practice React as part of [The Odin Project's curriculum](https:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/cv-builder.git
+   git clone https://github.com/insomniac2305/cv-builder.git
    cd cv-builder
    ```
 2. Install dependencies:
